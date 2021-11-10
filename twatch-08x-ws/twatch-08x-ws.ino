@@ -43,6 +43,8 @@ unsigned long timerDelay = 10;
 String response;
 
 
+// hex dumb is needed 
+
 void hexdump(const void *mem, uint32_t len, uint8_t cols = 16) {
   const uint8_t* src = (const uint8_t*) mem;
   Serial.printf("\n[HEXDUMP] Address: 0x%08X len: 0x%X (%d)", (ptrdiff_t)src, len, len);
@@ -91,6 +93,14 @@ void webSocketEvent(WStype_t type, uint8_t * payload, size_t length) {
 
 float batt_v;
 
+
+/* 
+
+This function is to keep brighteness on the watch to zero until the second interaction button is pressed
+
+*/
+
+
 void pressed()
 {
        watch->power->adc1Enable(AXP202_VBUS_VOL_ADC1 | AXP202_VBUS_CUR_ADC1 | AXP202_BATT_CUR_ADC1 | AXP202_BATT_VOL_ADC1, true);
@@ -103,6 +113,8 @@ void pressed()
 
       watch->setBrightness(100);
 }
+
+/* When the buttob is released, set the brightness to 0. This is to conserve energy for the watch. */ 
 
 void released()
 {
